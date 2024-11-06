@@ -8,7 +8,7 @@ class View(ft.UserControl):
         self._page = page
         self._page.title = "Template application using MVC and DAO"
         self._page.horizontal_alignment = 'CENTER'
-        self._page.theme_mode = ft.ThemeMode.DARK
+        self._page.theme_mode = ft.ThemeMode.LIGHT
         # controller (it is not initialized. Must be initialized in the main, after the controller is created)
         self._controller = None
         # graphical elements
@@ -20,22 +20,35 @@ class View(ft.UserControl):
 
     def load_interface(self):
         # title
-        self._title = ft.Text("Hello World", color="blue", size=24)
+        self._title = ft.Text("Esame voli", color="blue", size=24)
         self._page.controls.append(self._title)
 
         #ROW with some controls
         # text field for the name
-        self.txt_name = ft.TextField(
-            label="name",
+        self.txt_min = ft.TextField(
+            label="minimo compagnie",
             width=200,
-            hint_text="Insert a your name"
+            hint_text="Insert a number"
         )
-
-        # button for the "hello" reply
-        self.btn_hello = ft.ElevatedButton(text="Hello", on_click=self._controller.handle_hello)
-        row1 = ft.Row([self.txt_name, self.btn_hello],
+        self.btn_analizza = ft.ElevatedButton(text="Analizza aereoporti", on_click=self._controller.handle_analizza)
+        row1 = ft.Row([self.txt_min, self.btn_analizza],
                       alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row1)
+
+        #ROW 2
+        self.ddAereoportoPart = ft.Dropdown(label = "partenza")
+        self.btnConnessi = ft.ElevatedButton(text = "aereoporti connessi", disabled = True, on_click = self._controller.handle_connessi)
+        row2 = ft.Row([self.ddAereoportoPart, self.btnConnessi],
+                      alignment=ft.MainAxisAlignment.CENTER)
+        self._page.controls.append(row2)
+
+        #ROW3
+        self.ddAereoportoArr = ft.Dropdown(label = "arrivo")
+        self.txtTratte = ft.TextField(label = "tratte massime")
+        self.btnItinerario = ft.ElevatedButton(text = "cerca itinerario", on_click=self._controller.handleItinerario)
+        row3 = ft.Row([self.ddAereoportoArr, self.txtTratte, self.btnItinerario],
+                      alignment=ft.MainAxisAlignment.CENTER)
+        self._page.controls.append(row3)
 
         # List View where the reply is printed
         self.txt_result = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
